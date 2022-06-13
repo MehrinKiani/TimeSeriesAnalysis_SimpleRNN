@@ -32,3 +32,24 @@ y_pred = X_valid[:,-1]
 p1 = keras.losses.mean_squared_error (y_valid, y_pred)
 with tf.Session() as sess:
     p = np.mean(p1.eval())
+    
+# Fully Connected (FC) network
+model_FC = keras.models.Sequential([
+    keras.layers.Flatten(input_shape=[50,1]),
+    keras.layers.Dense(1)
+    ])
+
+model_FC.compile(optimizer='adam', loss='mse')
+
+history = model_FC.fit(
+    X_train,
+    y_train,
+    batch_size=10,
+    epochs=20,
+    # We pass some validation for
+    # monitoring validation loss and metrics
+    # at the end of each epoch
+    validation_data=(X_valid, y_valid),
+)
+
+#Simple RNN
